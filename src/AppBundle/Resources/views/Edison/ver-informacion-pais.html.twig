@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include 'base/header.html.twig' %}
+  </head>
+
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+       {% include 'base/sidebar.html.twig' %}
+
+        <!-- top navigation -->
+        <div class="top_nav">
+          {% include 'base/topbar.html.twig' %}
+        </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>{{informacion.paisid.paisnombre}} <small>  </small></h3>
+              </div>
+
+              <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Datos sobre {{informacion.paisid.paisnombre}}</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+
+                  <div class="x_content">
+
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+
+                      <ul class="stats-overview">
+                        <li>
+                          <span class="name"> Categoría Ordinario </span>
+                          <span class="value text-success" style="font-size: 18px;"> 
+                              {{informacion.categoriaordinarioid.categorianombre}} ({{informacion.categoriaordinarioid.categoriadescripcion}})
+                          </span>
+                        </li>
+                        <li>
+                          <span class="name"> Categoría Diplomatico </span>
+                          <span class="value text-success" style="font-size: 18px;"> 
+                              {{informacion.categoriadiplomaticoid.categorianombre}} ({{informacion.categoriadiplomaticoid.categoriadescripcion}})
+                          </span>
+                        </li>
+                        <li class="hidden-phone">
+                          <span class="name"> Código ISO </span>
+                          <span class="value text-success" style="font-size: 18px;"> 
+                              {{informacion.codigoiso}} 
+                          </span>
+                        </li>
+                      </ul>
+                      <br />
+
+                      <div   style="height:550px;"> <img src="{{ asset('uploads/mapas/' ~ mapa.nombremapa)}}" height="550px"></div>
+                       
+                      <div>
+
+                       
+
+                        <!-- end of user messages -->
+                        <ul class="messages">
+                         
+                          <li>
+                            <div class="message_wrapper">
+                               <h3 class="green"><i class="fa fa-building"></i> Observaciones</h3>
+                              <blockquote class="message">
+                              <br />
+                                   {{informacion.observaciones}}
+                              <br />
+                              </blockquote>
+                              <br />
+                             
+                            </div>
+                          </li>
+                        </ul>
+                        <!-- end of user messages -->
+
+
+                      </div>
+
+
+                    </div>
+
+                    <!-- start project-detail sidebar -->
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+
+                      <section class="panel">
+
+                        <div class="x_title">
+                          <h2>Información Básica</h2>
+                          <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-body">
+                            
+                            <div class="project_detail">
+
+                            <p class="title">Capital:</p>
+                            <p>{{informacion.capital}}</p>
+                            
+                            
+                            <p class="title">Idioma:</p>
+                            <p>{{informacion.idioma}}</p>
+                            
+                            <p class="title">Forma de gobierno:</p>
+                            <p>{{informacion.formagobierno}}</p>
+                            
+                             <p class="title">Legislacion:</p>
+                            <p>{{informacion.legislacion}}</p>
+                            
+                             <p class="title">Moneda:</p>
+                            <p>{{informacion.moneda}}</p>
+                            
+                             <p class="title">Población:</p>
+                            <p>{{informacion.poblacion}} habitantes</p>
+                            
+                            
+                          </div>
+                                                    <br />
+
+                          
+
+                          <br />
+                         
+                          <br />
+
+                                
+                        </div>
+
+                      </section>
+
+                    </div>
+                    <!-- end project-detail sidebar -->
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
+         {% include 'base/footer.html.twig' %}
+        </footer>
+        <!-- /footer content -->
+      </div>
+    </div>
+
+    {% include 'base/scripts.html.twig' %}
+  </body>
+</html>
