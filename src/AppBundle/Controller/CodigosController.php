@@ -85,7 +85,7 @@ class CodigosController extends Controller
     /**
      * @Route("/codigos/listado-general/", name="codigos_listado_general")
      */
-    public function ListadoCodigossAction(Request $request)
+    public function ListadoCodigosAction(Request $request)
     {
          
         $em = $this->getDoctrine()->getManager();
