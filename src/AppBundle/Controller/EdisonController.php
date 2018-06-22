@@ -5,10 +5,10 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Entity\Redconsular;
-use AppBundle\Entity\Consulados;
-use AppBundle\Form\AgregarConsuladoType;
-use AppBundle\Form\NuevoPaisConsuladoType;
+use AppBundle\Entity\Edison;
+use AppBundle\Entity\Pasaporte;
+use AppBundle\Form\AgregarPasaporteType;
+use AppBundle\Form\NuevoPaisEdisonType;
 
 
 
@@ -20,20 +20,20 @@ class EdisonController extends Controller
     public function AgregarPaisAction(Request $request)
     {
         //Llamamos a la entidad para crear un nuevo consulado
-        $consulado = new Redconsular();
+        $edison = new Edison();
         
         //Llamamos al formulario para agregar un nuevo consulado y le pasamos la entidad
-        $form = $this->createForm(NuevoPaisConsuladoType::class, $consulado);
+        $form = $this->createForm(NuevoPaisEdisonType::class, $edison);
         
         $form->handleRequest($request);
         // replace this example code with whatever you need
         if ($form->isSubmitted() && $form->isValid()) {
         // $form->getData() holds the submitted values
         // but, the original `$task` variable has also been updated
-        $informacion = $form->getData();
+        $pais = $form->getData();
         $user = $this->getUser();
-        $informacion->setUseradic($user);
-        $informacion->setFechaadic(new \DateTime('now'));
+        $pais->setUseradic($user);
+        $pais->setFechaadic(new \DateTime('now'));
         
          //$file = $informacion->getMapapais();
         $file = $form['nombremapa']->getData();
@@ -44,15 +44,15 @@ class EdisonController extends Controller
              $fileName = $file->getClientOriginalName();
 
              $file->move(
-                 $this->getParameter('mapas_directory'),
+                 $this->getParameter('mapas_edison_directory'),
                  $fileName
         );
              
-        $informacion->setNombremapa($fileName);
+        $pais->setNombremapa($fileName);
         // ... perform some action, such as saving the task to the database
         // for example, if Task is a Doctrine entity, save it!
         $em = $this->getDoctrine()->getManager();
-        $em->persist($informacion);
+        $em->persist($pais);
         $em->flush();
         
         
@@ -60,14 +60,15 @@ class EdisonController extends Controller
              
         }
         
-       $consuladoid = $informacion->getId();
+       //$consuladoid = $informacion->getId();
         
-
-        return $this->redirectToRoute('consulado_ver_informacion', array('id'=>$consuladoid));
+        return $this->redirectToRoute('edison_listado_general');
+    
+    //    return $this->redirectToRoute('consulado_ver_informacion', array('id'=>$consuladoid));
     }
         
     
-        return $this->render('AppBundle:Consulados:agregar-pais.html.twig', 
+        return $this->render('AppBundle:Edison:agregar-nuevo-pais.html.twig', 
                 array('form'=> $form->createView()));
     
         
@@ -75,40 +76,61 @@ class EdisonController extends Controller
     
     
     /**
-     * @Route("/edison/agregar-consulado/", name="edison_agregar")
+     * @Route("/edison/pais/agregar-documentos/", name="edison_pais_agregar_documentos")
      */
-    public function AgregarConsuladoAction(Request $request)
+    public function AgregarDocumentosAction(Request $request)
     {
         $id = $request->query->get('id');
         //Llamamos a la entidad para crear un nuevo consulado
-        $nuevo = new Consulados();
+        $nuevo = new Pasaporte();
         
         //Llamamos al formulario para agregar un nuevo consulado y le pasamos la entidad
-        $form = $this->createForm(AgregarConsuladoType::class, $nuevo);
+        $form = $this->createForm(AgregarPasaporteType::class, $nuevo);
         
         $form->handleRequest($request);
         // replace this example code with whatever you need
         if ($form->isSubmitted() && $form->isValid()) {
         // $form->getData() holds the submitted values
         // but, the original `$task` variable has also been updated
-        $consulado = $form->getData();
-        $user = $this->getUser();
-        $consulado->setUseradic($user);
-        $consulado->setFechaadic(new \DateTime('now'));
-        $consulado->setRedconsularid($id);
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($consulado);
-        $em->flush();
+         
+        $pasaporte = $form->getData();
+        $images = array();
+        $files = $nuevo->getNombrepasaporte();
+        $key = 0;
+      //  $files = $form['nombrepasaporte']->getData();
+        if($files != null) 
+            {
+                foreach ($files as $file)
+            {
+                $user = $this->getUser();
+                $pasaporte->setUseradic($user);
+                $pasaporte->setFechaadic(new \DateTime('now'));
+                $pasaporte->setEdisonid($id);
+                
+                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+                $file->move(
+                    $this->getParameter('mapas_directory'),
+                    $fileName
+                );
+                $images[$key++] = $fileName;
+                $pasaporte->setNombrePasaporte($images);
+
+                
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($pasaporte);
+                $em->flush();
+            }
+
+            }
         
-        
-       $consuladoid = $consulado->getRedconsularid();
+       //$consuladoid = $consulado->getRedconsularid();
         
 
-        return $this->redirectToRoute('consulado_ver_informacion', array('id'=>$consuladoid));
+        //return $this->redirectToRoute('consulado_ver_informacion', array('id'=>$consuladoid));
     }
         
     
-        return $this->render('AppBundle:Consulados:agregar-nuevo-consulado.html.twig', 
+        return $this->render('AppBundle:Edison:agregar-nuevo-pasaporte.html.twig', 
                 array('form'=> $form->createView(), 'redid'=> $id));
     
         
@@ -117,28 +139,28 @@ class EdisonController extends Controller
     
     
     /**
-     * @Route("/edison/ver-informacion/", name="edison_ver_informacion")
+     * @Route("/edison/pais/ver-informacion/", name="edison_ver_informacion")
      */
     public function VerConsuladoAction(Request $request)
     {
          $id = $request->query->get('id');
-         $redConsularRepository = $this->getDoctrine()
-                                 ->getRepository('AppBundle:Redconsular');
-        $redConsular = $redConsularRepository->findOneBy(array('id'=>"$id"));
+         $edisonRepository = $this->getDoctrine()
+                                 ->getRepository('AppBundle:Edison');
+        $pais = $edisonRepository->findOneBy(array('id'=>"$id"));
         
-        $em = $this->getDoctrine()->getManager();
-        $consuladosRepository = $this->getDoctrine()
-                      ->getRepository('AppBundle:Consulados');
+        //$em = $this->getDoctrine()->getManager();
+        $pasaportesRepository = $this->getDoctrine()
+                      ->getRepository('AppBundle:Pasaporte');
         
-        $consulados = $consuladosRepository->findBy(array('redconsularid'=>$id));
-        
-        
+        $pasaportes = $pasaportesRepository->findBy(array('edisonid'=>$id));
         
         
-         return $this->render('AppBundle:Consulados:ver-informacion-pais.html.twig', 
+        
+        
+         return $this->render('AppBundle:Edison:edison-pais-detalles.html.twig', 
                  array(
-                     'redconsular'=> $redConsular,
-                     'consulados'=> $consulados,
+                     'informacion'=> $pais,
+                     'documentos'=> $pasaportes,
                      ));
     }
     

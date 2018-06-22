@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 
-class AgregarPasaporteType extends AbstractType
+class NuevoPaisEdisonType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -24,25 +24,31 @@ class AgregarPasaporteType extends AbstractType
     {
         $builder
                 
-                
-
-                ->add('categoriapasaporteid', 
+                ->add('paisid', 
               EntityType::class, 
 
                         array(
-                            'class' => \AppBundle\Entity\Categoriapasaporte::class,
-                            'choice_label' => 'categorianombre',
+                            'class' => \AppBundle\Entity\Paises::class,
+                            'choice_label' => 'paisnombre',
                             'choice_value' => 'id',
-                            'placeholder'=> 'Seleccione una categoria',
+                            'placeholder'=> 'Seleccione un pais',
                             "attr" => array
                             ('class' => 'select2 form-control col-md-7 col-xs-12')
                             ))
 
+           
                 
-               ->add('nombrepasaporte', FileType::class, array(
-                    'label' => 'Mapa:',
-                   'data_class' => null,
-                   'multiple' => true,
+                ->add('codigomapa', 
+                    TextType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control', 'placeholder'=>false)))
+                
+               
+                
+                ->add('nombremapa', FileType::class, array(
+                    'label' => 'Mapa:', 
+                    'mapped'=> false,
                     'required'   => true, 
                     "attr" => array('accept'=>'application/png'),
                     'data_class' => null))
@@ -64,7 +70,7 @@ class AgregarPasaporteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Pasaporte'
+            'data_class' => 'AppBundle\Entity\Edison'
         ));
     }
 }

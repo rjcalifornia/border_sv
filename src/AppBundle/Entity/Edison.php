@@ -24,7 +24,8 @@ class Edison
     /**
      * @var int
      *
-     * @ORM\Column(name="paisid", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Paises")
+     * @ORM\JoinColumn(name="paisid", referencedColumnName="id")
      */
     private $paisid;
     
@@ -36,6 +37,12 @@ class Edison
     private $codigomapa;
 
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombremapa", type="string", length=400, nullable=true)
+     */
+    private $nombremapa;
 
     /**
      * @var string
@@ -79,11 +86,11 @@ class Edison
     /**
      * Set paisid
      *
-     * @param integer $paisid
+     * @param \AppBundle\Entity\Paises $paisid
      *
      * @return Edison
      */
-    public function setPaisid($paisid)
+    public function setPaisid(\AppBundle\Entity\Paises $paisid)
     {
         $this->paisid = $paisid;
 
@@ -93,7 +100,7 @@ class Edison
     /**
      * Get paisid
      *
-     * @return int
+     * @return \AppBundle\Entity\Paises
      */
     public function getPaisid()
     {
@@ -202,7 +209,7 @@ class Edison
      *
      * @param string $codigomapa
      *
-     * @return Redconsular
+     * @return Edison
      */
     public function setCodigomapa($codigomapa)
     {
@@ -220,5 +227,31 @@ class Edison
     {
         return $this->codigomapa;
     }
+    
+    /**
+     * Set nombremapa
+     *
+     * @param string $nombremapa
+     *
+     * @return Edison
+     */
+    public function setNombremapa($nombremapa)
+    {
+        $this->nombremapa = $nombremapa;
+
+        return $this;
+    }
+
+    /**
+     * Get nombremapa
+     *
+     * @return string
+     */
+    public function getNombremapa()
+    {
+        return $this->nombremapa;
+    }
+
+
 }
 

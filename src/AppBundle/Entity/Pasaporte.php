@@ -21,12 +21,6 @@ class Pasaporte
      */
     private $id;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="paisid", type="integer", nullable=true)
-     */
-    private $paisid;
 
     /**
      * @var int
@@ -38,14 +32,15 @@ class Pasaporte
     /**
      * @var int
      *
-     * @ORM\Column(name="categoriapasaporteid", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Categoriapasaporte")
+     * @ORM\JoinColumn(name="categoriapasaporteid", referencedColumnName="id")
      */
     private $categoriapasaporteid;
 
     /**
-     * @var string
+     * @var array
      *
-     * @ORM\Column(name="nombrepasaporte", type="string", length=500, nullable=true)
+     * @ORM\Column(name="nombrepasaporte", type="array", length=500, nullable=true)
      */
     private $nombrepasaporte;
 
@@ -74,29 +69,6 @@ class Pasaporte
         return $this->id;
     }
 
-    /**
-     * Set paisid
-     *
-     * @param integer $paisid
-     *
-     * @return Pasaporte
-     */
-    public function setPaisid($paisid)
-    {
-        $this->paisid = $paisid;
-
-        return $this;
-    }
-
-    /**
-     * Get paisid
-     *
-     * @return int
-     */
-    public function getPaisid()
-    {
-        return $this->paisid;
-    }
 
     /**
      * Set edisonid
@@ -125,11 +97,11 @@ class Pasaporte
     /**
      * Set categoriapasaporteid
      *
-     * @param integer $categoriapasaporteid
+     * @param \AppBundle\Entity\Categoriapasaporte $categoriapasaporteid
      *
      * @return Pasaporte
      */
-    public function setCategoriapasaporteid($categoriapasaporteid)
+    public function setCategoriapasaporteid(\AppBundle\Entity\Categoriapasaporte $categoriapasaporteid)
     {
         $this->categoriapasaporteid = $categoriapasaporteid;
 
@@ -139,7 +111,7 @@ class Pasaporte
     /**
      * Get categoriapasaporteid
      *
-     * @return int
+     * @return \AppBundle\Entity\Categoriapasaporte
      */
     public function getCategoriapasaporteid()
     {
@@ -149,7 +121,7 @@ class Pasaporte
     /**
      * Set nombrepasaporte
      *
-     * @param string $nombrepasaporte
+     * @param array $nombrepasaporte
      *
      * @return Pasaporte
      */
@@ -163,7 +135,7 @@ class Pasaporte
     /**
      * Get nombrepasaporte
      *
-     * @return string
+     * @return array
      */
     public function getNombrepasaporte()
     {

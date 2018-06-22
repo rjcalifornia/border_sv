@@ -168,9 +168,38 @@
     <script src="{{ asset('assets/pdfmake/build/vfs_fonts.js')}}"></script>
    
     <script>
+        var markers = [
+      {latLng: [41.90, 12.45], name: 'Ciudad del Vaticano'},
+      {latLng: [43.73, 7.41], name: 'Monaco'},
+      {latLng: [-0.52, 166.93], name: 'Nauru'},
+      {latLng: [-8.51, 179.21], name: 'Tuvalu'},
+      {latLng: [43.93, 12.46], name: 'San Marino'},
+      {latLng: [47.14, 9.52], name: 'Liechtenstein'},
+      {latLng: [7.11, 171.06], name: 'Islas Marshall'},
+      {latLng: [17.3, -62.73], name: 'Saint Kitts y Nevis'},
+      {latLng: [3.2, 73.22], name: 'Maldivas'},
+      {latLng: [35.88, 14.5], name: 'Malta'},
+      {latLng: [12.05, -61.75], name: 'Grenada'},
+      {latLng: [13.16, -61.23], name: 'San Vicente y las Granadinas'},
+      {latLng: [13.16, -59.55], name: 'Barbados'},
+      {latLng: [17.11, -61.85], name: 'Antigua y Barbuda'},
+      {latLng: [-4.61, 55.45], name: 'Seychelles'},
+      {latLng: [7.35, 134.46], name: 'Palau'},
+      {latLng: [42.5, 1.51], name: 'Andorra'},
+      {latLng: [14.01, -60.98], name: 'Saint Lucia'},
+      {latLng: [6.91, 158.18], name: 'Estados Federados de Micronesia'},
+      {latLng: [1.3, 103.8], name: 'Singapur'},
+      {latLng: [1.46, 173.03], name: 'Kiribati'},
+      {latLng: [-21.13, -175.2], name: 'Tonga'},
+      {latLng: [15.3, -61.38], name: 'Dominica'},
+      {latLng: [-20.2, 57.5], name: 'Mauricio'},
+      {latLng: [26.02, 50.55], name: 'Bahrain'},
+      {latLng: [0.33, 6.73], name: 'Santo Tome y Principe', code: 'ST'}
+    ];
     $(function(){
       $('#world-map').vectorMap({map: 'world_mill',
       
+     
       onRegionClick: function(event, code) 
                 {
                     {%for m in data.edison%}
@@ -178,7 +207,19 @@
                         window.location = '{{path('edison_ver_informacion')}}?id={{m.id}}';
                     }
                     {% endfor %}
-                }
+                },
+          
+                          markers: markers,
+
+        onMarkerClick: function(event, index) {
+                      // alter the weburl
+                     {%for m in data.edison%}
+                    if (markers[index].code === '{{m.codigomapa}}') {
+                        window.location = '{{path('edison_ver_informacion')}}?id={{m.id}}';
+                    }
+                    {% endfor %}
+                  }
+                
         });
     });
   </script>
@@ -187,5 +228,5 @@
     <link rel="stylesheet" href="{{ asset('assets/jvector/jquery-jvectormap-2.0.3.css')}}" type="text/css" media="screen"/>
    
      <script src="{{ asset('assets/jvector/jquery-jvectormap-2.0.3.min.js')}}"></script>
-      <script src="{{ asset('assets/jvector/jquery-jvectormap-world-mill.js')}}"></script>
+      <script src="{{ asset('assets/jvector/jquery-jvectormap-world-mill_es.js')}}"></script>
 </html>
