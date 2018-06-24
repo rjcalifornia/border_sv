@@ -50,7 +50,7 @@ class AgregarPasaporteType extends AbstractType
                 
                      
             ->add('guardar', SubmitType::class, 
-                    array('label' => 'Registrar', 
+                    array('label' => 'Almacenar documentos en el sistema', 
                         "attr" => array('class' => 'btn btn-success')))
            
             

@@ -102,24 +102,32 @@ class EdisonController extends Controller
             {
                 foreach ($files as $file)
             {
-                $user = $this->getUser();
-                $pasaporte->setUseradic($user);
-                $pasaporte->setFechaadic(new \DateTime('now'));
-                $pasaporte->setEdisonid($id);
+               
                 
                 $fileName = md5(uniqid()) . '.' . $file->guessExtension();
                 $file->move(
                     $this->getParameter('mapas_directory'),
                     $fileName
                 );
+                
+           
                 $images[$key++] = $fileName;
                 $pasaporte->setNombrePasaporte($images);
+            }
+                $user = $this->getUser();
+                $pasaporte->setUseradic($user);
+                $pasaporte->setFechaadic(new \DateTime('now'));
+                $pasaporte->setEdisonid($id);
+                
+
 
                 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($pasaporte);
                 $em->flush();
-            }
+                
+                
+                return $this->redirectToRoute('edison_ver_informacion', array('id'=>$id));
 
             }
         
