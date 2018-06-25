@@ -2,13 +2,15 @@
 <html lang="en">
   <head>
    {% include 'base/header.html.twig' %}
-     <link href="{{ asset('assets/simplelightbox/dist/simplelightbox.css')}}" rel="stylesheet">
+    {# <link href="{{ asset('assets/simplelightbox/dist/simplelightbox.css')}}" rel="stylesheet">#}
+     <link href="{{ asset('assets/lightbox2/dist/css/lightbox.css')}}" rel="stylesheet">
+
   </head>
 
   <body class="nav-md">
     <div class="container body">
       <div class="main_container">
-        {% include 'base/sidebar-requisitos-elsalvador.html.twig' %}
+        {% include 'base/sidebar-edison.html.twig' %}
 
         <!-- top navigation -->
          <div class="top_nav">
@@ -36,10 +38,13 @@
        <div class="x_content">
 
                     <div class="col-md-12">
-                      <div class="">
+                      <div class="pais" >
+                          
                           <center>
+                        <a href="{{ asset('uploads/edison/mapas/' ~informacion.nombremapa)}}" data-lightbox="mapa" >
                         <img src="{{ asset('uploads/edison/mapas/' ~informacion.nombremapa)}}" alt="..."  width="45%"/>
-                      </center>
+                      </a>
+                          </center>
                       
                       </div>
                       
@@ -82,7 +87,7 @@
        
         {% if m.categoriapasaporteid.id == 1%}
         
-         <a href="{{ asset('uploads/mapas/' ~s)}}">
+         <a href="{{ asset('uploads/mapas/' ~s)}}" data-lightbox="nacional">
                           <img src="{{ asset('uploads/mapas/' ~s)}}" alt="..." />
                         </a>
                         {%endif%}
@@ -106,7 +111,7 @@
        
         {% if m.categoriapasaporteid.id == 2%}
         
-         <a href="{{ asset('uploads/mapas/' ~s)}}">
+         <a href="{{ asset('uploads/mapas/' ~s)}}" data-lightbox="diplomatico">
                           <img src="{{ asset('uploads/mapas/' ~s)}}" alt="..." />
                         </a>
                         {%endif%}
@@ -131,7 +136,7 @@
        
         {% if m.categoriapasaporteid.id == 3%}
         
-         <a href="{{ asset('uploads/mapas/' ~s)}}">
+         <a href="{{ asset('uploads/mapas/' ~s)}}" data-lightbox="oficial">
                           <img src="{{ asset('uploads/mapas/' ~s)}}" alt="..." />
                         </a>
                         {%endif%}
@@ -160,7 +165,7 @@
 
                         {% if m.categoriapasaporteid.id == 4%}
 
-                         <a href="{{ asset('uploads/mapas/' ~s)}}">
+                         <a href="{{ asset('uploads/mapas/' ~s)}}" data-lightbox="servicio">
                                           <img src="{{ asset('uploads/mapas/' ~s)}}" alt="..." />
                                         </a>
                                         {%endif%}
@@ -187,7 +192,7 @@
        
         {% if m.categoriapasaporteid.id == 5%}
         
-         <a href="{{ asset('uploads/mapas/' ~s)}}">
+         <a href="{{ asset('uploads/mapas/' ~s)}}" data-lightbox="refugio">
                           <img src="{{ asset('uploads/mapas/' ~s)}}" alt="..." />
                         </a>
                         {%endif%}
@@ -213,7 +218,7 @@
        
         {% if m.categoriapasaporteid.id == 6%}
         
-         <a href="{{ asset('uploads/mapas/' ~s)}}">
+         <a href="{{ asset('uploads/mapas/' ~s)}}" data-lightbox="provisional">
                           <img src="{{ asset('uploads/mapas/' ~s)}}" alt="..." />
                         </a>
                         {%endif%}
@@ -265,8 +270,8 @@
     </div>
 
   {% include 'base/scripts.html.twig' %}
-          <script src="{{ asset('assets/simplelightbox/dist/simple-lightbox.js')}}"></script>
-
+  {#        <script src="{{ asset('assets/simplelightbox/dist/simple-lightbox.js')}}"></script>
+{#
           <script>
               	$(function(){
 		var $gallery1 = $('.galeria1 a').simpleLightbox();
@@ -282,20 +287,25 @@
             
             
              $(function(){
-		var $gallery3 = $('.galeria4 a').simpleLightbox();
+		var $gallery4 = $('.galeria4 a').simpleLightbox();
             });
             
             
              $(function(){
-		var $gallery3 = $('.galeria5 a').simpleLightbox();
+		var $gallery5 = $('.galeria5 a').simpleLightbox();
             });
             
              $(function(){
-		var $gallery3 = $('.galeria6 a').simpleLightbox();
+		var $gallery6 = $('.galeria6 a').simpleLightbox();
+            });
+            
+             $(function(){
+		var $gallery7 = $('.pais a').simpleLightbox();
             });
           </script>
-    
-          
+    #}
+          <script src="{{ asset('assets/lightbox2/dist/js/lightbox.js')}}"></script>
+
 
   </body>
 </html>
