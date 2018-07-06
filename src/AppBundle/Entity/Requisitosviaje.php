@@ -39,9 +39,9 @@ class Requisitosviaje
     /**
      * @var string
      *
-     * @ORM\Column(name="resumen", type="string", length=900, nullable=true)
+     * @ORM\Column(name="codigointerno", type="string", length=900, nullable=true)
      */
-    private $resumen;
+    private $codigointerno;
 
     /**
      * @var string
@@ -152,27 +152,27 @@ class Requisitosviaje
     }
 
     /**
-     * Set resumen
+     * Set codigointerno
      *
-     * @param string $resumen
+     * @param string $codigointerno
      *
      * @return Requisitosviaje
      */
-    public function setResumen($resumen)
+    public function setCodigointerno($codigointerno)
     {
-        $this->resumen = $resumen;
+        $this->codigointerno = $codigointerno;
 
         return $this;
     }
 
     /**
-     * Get resumen
+     * Get codigointerno
      *
      * @return string
      */
-    public function getResumen()
+    public function getCodigointerno()
     {
-        return $this->resumen;
+        return $this->codigointerno;
     }
 
     /**

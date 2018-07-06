@@ -39,8 +39,8 @@ class AgregarRequisitoPaisType extends AbstractType
                 
                 
                 
-                ->add('resumen', 
-                    TextareaType::class, 
+                ->add('codigointerno', 
+                    TextType::class, 
                     array(
                         "attr" => array
                         ('class' => 'form-control col-md-7 col-xs-12', 'placeholder'=>false)))

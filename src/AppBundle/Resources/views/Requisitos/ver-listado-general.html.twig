@@ -60,54 +60,7 @@
 
             <div class="clearfix"></div>
 
-            <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>Listado general <small>Países</small></h2>
-                    
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                    <p class="text-muted font-13 m-b-30">
-                    
-                    </p>
-                    <table id="datatable" class="table table-striped table-bordered">
-                      <thead>
-                        <tr>
-                        <th>#</th>
-                          <th>País</th>
-                          <th>Resumen</th>
-                         
-                        </tr>
-                      </thead>
-
-
-                      <tbody>
-                          {%set counter = 0%}
-                          {%for m in data.pais%}
-                              {%set counter = counter + 1%}
-                              
-                        <tr onclick="window.location='{{ path('requisitos_ver_informacion', { 'id':  m.id }) }}';">
-                          <td>{{counter}}</td>
-                          <td>{{m.paisid.paisnombre}}</td>
-                          <td>{{m.resumen}}</td>
-                          </tr>
-                        {%endfor%}
-                        
-                     
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-
-             
-
-           
-
-              
-            </div>
+             <div id="world-map" style="width: 100%; height: 700px"></div>
           </div>
         </div>
         <!-- /page content -->
@@ -148,6 +101,67 @@
     <script src="{{ asset('assets/pdfmake/build/pdfmake.min.js')}}"></script>
     <script src="{{ asset('assets/pdfmake/build/vfs_fonts.js')}}"></script>
 
+    
+    <script>
+        var markers = [
+      {latLng: [41.90, 12.45], name: 'Ciudad del Vaticano'},
+      {latLng: [43.73, 7.41], name: 'Monaco'},
+      {latLng: [-0.52, 166.93], name: 'Nauru'},
+      {latLng: [-8.51, 179.21], name: 'Tuvalu'},
+      {latLng: [43.93, 12.46], name: 'San Marino'},
+      {latLng: [47.14, 9.52], name: 'Liechtenstein'},
+      {latLng: [7.11, 171.06], name: 'Islas Marshall'},
+      {latLng: [17.3, -62.73], name: 'Saint Kitts y Nevis'},
+      {latLng: [3.2, 73.22], name: 'Maldivas'},
+      {latLng: [35.88, 14.5], name: 'Malta'},
+      {latLng: [12.05, -61.75], name: 'Grenada'},
+      {latLng: [13.16, -61.23], name: 'San Vicente y las Granadinas'},
+      {latLng: [13.16, -59.55], name: 'Barbados'},
+      {latLng: [17.11, -61.85], name: 'Antigua y Barbuda'},
+      {latLng: [-4.61, 55.45], name: 'Seychelles'},
+      {latLng: [7.35, 134.46], name: 'Palau'},
+      {latLng: [42.5, 1.51], name: 'Andorra'},
+      {latLng: [14.01, -60.98], name: 'Saint Lucia'},
+      {latLng: [6.91, 158.18], name: 'Estados Federados de Micronesia'},
+      {latLng: [1.3, 103.8], name: 'Singapur'},
+      {latLng: [1.46, 173.03], name: 'Kiribati'},
+      {latLng: [-21.13, -175.2], name: 'Tonga'},
+      {latLng: [15.3, -61.38], name: 'Dominica'},
+      {latLng: [-20.2, 57.5], name: 'Mauricio'},
+      {latLng: [26.02, 50.55], name: 'Bahrain'},
+      {latLng: [0.33, 6.73], name: 'Santo Tome y Principe', code: 'ST'}
+    ];
+    $(function(){
+      $('#world-map').vectorMap({map: 'world_mill',
+      
+     
+      onRegionClick: function(event, code) 
+                {
+                    {%for m in data.pais%}
+                    if (code === '{{m.codigointerno}}') {
+                        window.location = '{{ path('requisitos_ver_informacion') }}?id={{m.id}}';
+                    }
+                    {% endfor %}
+                },
+          
+                          markers: markers,
+
+        onMarkerClick: function(event, index) {
+                      // alter the weburl
+                     {%for m in data.pais%}
+                    if (markers[index].code === '{{m.codigointerno}}') {
+                        window.location = '{{ path('requisitos_ver_informacion') }}?id={{m.id}}';
+                    }
+                    {% endfor %}
+                  }
+                
+        });
+    });
+  </script>
    <!-- Custom Theme Scripts -->
     <script src="{{ asset('assets/js/custom.min.js')}}"></script>
+      <link rel="stylesheet" href="{{ asset('assets/jvector/jquery-jvectormap-2.0.3.css')}}" type="text/css" media="screen"/>
+   
+     <script src="{{ asset('assets/jvector/jquery-jvectormap-2.0.3.min.js')}}"></script>
+      <script src="{{ asset('assets/jvector/jquery-jvectormap-world-mill_es.js')}}"></script>
 </html>
