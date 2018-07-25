@@ -10,6 +10,16 @@ use AppBundle\Entity\Pasaporte;
 use AppBundle\Form\AgregarPasaporteType;
 use AppBundle\Form\NuevoPaisEdisonType;
 
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;   
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+
 
 
 class EdisonController extends Controller
@@ -23,7 +33,60 @@ class EdisonController extends Controller
         $edison = new Edison();
         
         //Llamamos al formulario para agregar un nuevo consulado y le pasamos la entidad
-        $form = $this->createForm(NuevoPaisEdisonType::class, $edison);
+        //$form = $this->createForm(NuevoPaisEdisonType::class, $edison);
+        
+        $edisonListadoRepository = $this->getDoctrine()->getRepository('AppBundle:Edison');
+        
+        $edisonPaises = $edisonListadoRepository->createQueryBuilder("r")
+        ->select('IDENTITY(r.paisid)')
+        ->getQuery()
+        ->getResult();
+        
+        $paisesRepository = $this->getDoctrine()->getRepository('AppBundle:Paises');
+
+         $paises = $paisesRepository->createQueryBuilder("q")
+                ->where("q.id NOT IN (:mispaises)")
+                ->setParameter("mispaises", $edisonPaises)
+                ->getQuery()
+                ->getResult();
+        
+         $form = $this->createFormBuilder($edison);
+         $form->add('paisid', 
+              EntityType::class, 
+
+                        array(
+                            'class' => \AppBundle\Entity\Paises::class,
+                            'choice_label' => 'paisnombre',
+                            //'choice_value' => 'id',
+                             'choices' => $paises,
+                            'placeholder'=> 'Seleccione un pais',
+                            "attr" => array
+                            ('class' => 'select2 form-control col-md-7 col-xs-12')
+                            ));
+
+           
+                
+                $form->add('codigomapa', 
+                    TextType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control', 'placeholder'=>false)));
+                
+               
+                
+                $form->add('nombremapa', FileType::class, array(
+                    'label' => 'Mapa:', 
+                    'mapped'=> false,
+                    'required'   => true, 
+                    "attr" => array('accept'=>'application/png'),
+                    'data_class' => null));
+                
+                
+                     
+            $form->add('guardar', SubmitType::class, 
+                    array('label' => 'Registrar', 
+                        "attr" => array('class' => 'btn btn-success')));
+        $form =  $form->getForm();
         
         $form->handleRequest($request);
         // replace this example code with whatever you need
