@@ -3,11 +3,20 @@
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\AbstractType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Requisitosviaje;
 use AppBundle\Form\AgregarRequisitoPaisType;
-
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;   
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class RequisitosController extends Controller
 {
@@ -33,7 +42,83 @@ class RequisitosController extends Controller
     public function AgregarAction(Request $request)
     {
         $requisitoviaje = new Requisitosviaje();
-        $form = $this->createForm(AgregarRequisitoPaisType::class, $requisitoviaje);
+        $requiRepository = $this->getDoctrine()->getRepository('AppBundle:Requisitosviaje');
+        
+        $listado = $requiRepository->createQueryBuilder("r")
+        ->select('IDENTITY(r.paisid)')
+        ->getQuery()
+        ->getResult();
+        
+        $requisitosRepository = $this->getDoctrine()->getRepository('AppBundle:Paises');
+
+         $paises = $requisitosRepository->createQueryBuilder("q")
+                ->where("q.id NOT IN (:mispaises)")
+                ->setParameter("mispaises", $listado)
+                ->getQuery()
+                ->getResult();
+        
+        
+         $form = $this->createFormBuilder($requisitoviaje);
+         $form->add('paisid', 
+              EntityType::class, 
+
+                        array(
+                            'class' => \AppBundle\Entity\Paises::class,
+                            'choice_label' => 'paisnombre',
+                           // 'choice_value' => 'id',
+                            'placeholder'=> 'Seleccione un pais',
+                            'choices' => $paises,
+                            "attr" => array
+                            ('class' => 'seleccionar-pais form-control col-md-7 col-xs-12')
+                            ));
+
+                
+                
+                
+                $form->add('codigointerno', 
+                    TextType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control col-md-7 col-xs-12', 'placeholder'=>false)));
+                
+
+                $form->add('pasaportedestino', 
+                    TextareaType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control col-md-7 col-xs-12', 'placeholder'=>false)));
+
+                
+                $form->add('visadestino', 
+                    TextareaType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control col-md-7 col-xs-12', 'placeholder'=>false)));
+                
+                
+                
+                $form->add('destinosalud', 
+                    TextareaType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control col-md-7 col-xs-12', 'placeholder'=>false)));
+                
+                
+                
+                
+                
+                $form->add('mapa', FileType::class, array(
+                    'label' => 'Mapa:', 
+                    'mapped'=> false,
+                    'required'   => true, 
+                    "attr" => array('accept'=>'application/png'),
+                    'data_class' => null));
+                     
+            $form->add('guardar', SubmitType::class, 
+                    array('label' => 'Registrar', 
+                        "attr" => array('class' => 'btn btn-success')));
+          $form =  $form->getForm();
+        
         $form->handleRequest($request);
         // replace this example code with whatever you need
         if ($form->isSubmitted() && $form->isValid()) {
@@ -71,7 +156,8 @@ class RequisitosController extends Controller
 
         return $this->redirectToRoute('requisitos_listado_general');
     }
-         return $this->render('AppBundle:Requisitos:agregar-nuevo-requisito-pais.html.twig', array('form'=> $form->createView()));
+         return $this->render('AppBundle:Requisitos:agregar-nuevo-requisito-pais.html.twig',
+                 array('form'=> $form->createView()));
     
         
     }
