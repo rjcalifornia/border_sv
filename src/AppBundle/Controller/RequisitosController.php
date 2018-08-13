@@ -163,6 +163,62 @@ class RequisitosController extends Controller
     }
     
     
+      /**
+     * @Route("/requisitos/editar-informacion/", name="requisitos_editar_informacion")
+     */
+    public function editarRequisitosPaisAction(Request $request)
+    {
+        $id = $request->query->get('id');
+         $requisitosRepository = $this->getDoctrine()
+                                 ->getRepository('AppBundle:Requisitosviaje');
+        $requisitosPais    = $requisitosRepository->findOneBy(array('id'=>"$id"));
+        
+        //Llamamos al formulario para agregar un nuevo consulado y le pasamos la entidad
+        $form = $this->createForm(AgregarRequisitoPaisType::class, $requisitosPais);
+        $form->handleRequest($request);
+        // replace this example code with whatever you need
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
+        $informacion = $form->getData();
+        $user = $this->getUser();
+        $informacion->setUseradic($user);
+        $informacion->setFechaadic(new \DateTime('now'));
+        
+        $mapa = $form['mapa']->getData();
+        
+            if ($mapa != null)
+            {
+                // $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                 $fileNames = $mapa->getClientOriginalName();
+
+                 $mapa->move(
+                     $this->getParameter('mapas_requisitos_directory'),
+                     $fileNames
+            );
+
+                 $informacion->setMapa($fileNames);
+            // ... perform some action, such as saving the task to the database
+            // for example, if Task is a Doctrine entity, save it!
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($informacion);
+            $em->flush();
+            
+            
+
+            }
+        
+            return $this->redirectToRoute('requisitos_ver_informacion', 
+                    array(
+                        'id'=>$id,
+                    ));
+        
+        }
+        
+        return $this->render('AppBundle:Requisitos:editar-requisitos-pais.html.twig', 
+                array('form'=> $form->createView()));
+    }
+    
+    
      /**
      * @Route("/requisitos/ver-informacion/", name="requisitos_ver_informacion")
      */

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include 'base/header.html.twig' %}
+  </head>
+
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+      {% include 'base/sidebar.html.twig' %}
+
+        <!-- top navigation -->
+        <div class="top_nav">
+         {% include 'base/topbar.html.twig' %}
+        </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Reporte Documentos válidos de viaje</h3>
+              </div>
+
+                
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+            
+          <!-- top tiles -->
+          
+          {%set faltantes = 0%}
+          {%for n in data.paisesfaltantes%}
+              {%set faltantes = faltantes + 1%}
+              
+              {%endfor%}
+              
+               {%set ingresados = 0%}
+          {%for n in data.paisesingresados%}
+              {%set ingresados = ingresados + 1%}
+              
+              {%endfor%}
+              
+          <div class="row tile_count">
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-building"></i> Paises ingresados</span>
+              <div class="count">{{ingresados}}</div>
+              <span class="count_bottom"><i class="green"></i></span>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-clock-o"></i> Países faltantes</span>
+              <div class="count">{{faltantes}}</div>
+              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i></i></span>
+            </div>
+              
+          </div>
+         </div>
+          <!-- /top tiles -->
+
+                      <div class="page-title">
+              <div class="title_left">
+                <h3>Reporte Red Consular</h3>
+              </div>
+
+                
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+            
+          <!-- top tiles -->
+          
+          {%set redfaltantes = 0%}
+          {%for n in data.paisconsuladofaltante%}
+              {%set redfaltantes = redfaltantes + 1%}
+              
+              {%endfor%}
+              
+               {%set redingresados = 0%}
+          {%for n in data.paisconsuladoingresado%}
+              {%set redingresados = redingresados + 1%}
+              
+              {%endfor%}
+              
+          <div class="row tile_count">
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-building"></i> Paises ingresados</span>
+              <div class="count">{{redingresados}}</div>
+              <span class="count_bottom"><i class="green"></i></span>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-clock-o"></i> Países faltantes</span>
+              <div class="count">{{redfaltantes}}</div>
+              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i></i></span>
+            </div>
+              
+          </div>
+         </div>
+          <!-- /top tiles -->
+
+          
+          <br />
+
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
+           {% include 'base/footer.html.twig' %}
+        </footer>
+        <!-- /footer content -->
+      </div>
+    </div>
+
+  {% include 'base/scripts.html.twig' %}
+    <script src="{{ asset('assets/jqvmap/dist/jquery.vmap.js')}}"></script>
+    <script src="{{ asset('assets/jqvmap/dist/maps/jquery.vmap.world.js')}}"></script>
+    <script src="{{ asset('assets/jqvmap/examples/js/jquery.vmap.sampledata.js')}}"></script>
+  </body>
+</html>

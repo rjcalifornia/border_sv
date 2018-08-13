@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include 'base/header.html.twig' %}
+    
+  
+  </head>
+
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+        {% include 'base/sidebar-requisitos-elsalvador.html.twig' %}
+
+        <!-- top navigation -->
+        <div class="top_nav">
+        {% include 'base/topbar.html.twig' %}
+        </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Administración</h3>
+              </div>
+
+              <div class="title_right">
+                
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Editando requisitos de viaje</h2>
+                
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <br />
+                 
+                    <div id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                       {{form_start(form)}} 
+                      
+                       <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="pais">
+                            País:
+                            <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          {{form_widget(form.paisid)}}
+                        </div>
+                      </div>
+                        
+                        
+                        
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
+                            Código interno de país: 
+                            <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          {{form_widget(form.codigointerno)}}
+                        </div>
+                      </div>
+                      
+                        
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
+                            Requisitos de ingreso: 
+                            <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          {{form_widget(form.pasaportedestino)}}
+                        </div>
+                      </div> 
+                       
+                    
+                      
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
+                            Visa requerida:
+                            <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          {{form_widget(form.visadestino)}}
+                        </div>
+                      </div>
+                        
+                        
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
+                            Requisitos medicos: 
+                            <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          {{form_widget(form.destinosalud)}}
+                        </div>
+                      </div>
+                        
+                        
+                        
+                        <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
+                            Mapa del país: 
+                            <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          {{form_widget(form.mapa)}}
+                        </div>
+                      </div>
+                        
+                      <div class="ln_solid"></div>
+                      <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                         {{form_widget(form.guardar)}}
+                        </div>
+                      </div>
+                      {{form_end(form)}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+       {% include 'base/footer.html.twig' %}
+        <!-- /footer content -->
+      </div>
+    </div>
+
+   {% include 'base/scripts.html.twig' %}
+        <script>
+            $(document).ready(function() {
+            $('.seleccionar-pais').select2();
+            });
+        </script>
+  </body>
+</html>
