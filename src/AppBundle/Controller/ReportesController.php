@@ -8,19 +8,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ReportesController extends Controller
 {
+
     /**
-     * @Route("/", name="homepage")
+     * @Route("/administracion/reportes/documentos-validos-de-viaje/", name="reporte_paises_documentos_validos")
      */
-    public function indexAction(Request $request)
-    {
-        // replace this example code with whatever you need
-         return $this->render('AppBundle:Home:home.html.twig');
-    }
-    
-    /**
-     * @Route("/administracion/reportes/", name="reporte_paises")
-     */
-    public function reportePaisesEdisonAction(Request $request)
+    public function reporteDocumentosValidosAction(Request $request)
     {
         $edisonListadoRepository = $this->getDoctrine()->getRepository('AppBundle:Edison');
         
@@ -44,34 +36,57 @@ class ReportesController extends Controller
                 ->getResult();
          
         
-        $redconsularRepository = $this->getDoctrine()->getRepository('AppBundle:Redconsular');
+         $data['paisesfaltantes'] = $paises;
+         $data['paisesingresados'] = $ingresados;
+         
+        // replace this example code with whatever you need
+         return $this->render('AppBundle:Reportes:reportes-documentos-validos-de-viaje.html.twig',
+                 array(
+                     'data'=>$data,
+                 )
+                 
+                 );
+    }
+    
+    
+    /**
+     * @Route("/administracion/reportes/requisitos-de-viaje", name="reporte_paises_requisitos_de_viaje")
+     */
+    public function reporteRequisitosViajesAction(Request $request)
+    {
         
-        $consuladosPaises = $redconsularRepository->createQueryBuilder("r")
+        
+        
+        
+        $paisesRepository = $this->getDoctrine()->getRepository('AppBundle:Paises');
+
+        
+        $requisitosRepository = $this->getDoctrine()->getRepository('AppBundle:Requisitosviaje');
+        
+        $requisitosPaises = $requisitosRepository->createQueryBuilder("r")
         ->select('IDENTITY(r.paisid)')
         ->getQuery()
         ->getResult();
         
-        $consuladosPaisesFaltantes = $paisesRepository->createQueryBuilder("q")
+        $requisitosPaisesFaltantes = $paisesRepository->createQueryBuilder("q")
                 ->where("q.id NOT IN (:mispaises)")
-                ->setParameter("mispaises", $consuladosPaises)
+                ->setParameter("mispaises", $requisitosPaises)
                 ->getQuery()
                 ->getResult();
          
-        $consuladosPaisesIngresados = $paisesRepository->createQueryBuilder("q")
+        $requisitosPaisesIngresados = $paisesRepository->createQueryBuilder("q")
                 ->where("q.id IN (:mispaises)")
-                ->setParameter("mispaises", $consuladosPaises)
+                ->setParameter("mispaises", $requisitosPaises)
                 ->getQuery()
                 ->getResult();
         
         
         
-         $data['paisesfaltantes'] = $paises;
-         $data['paisesingresados'] = $ingresados;
-         $data['paisconsuladofaltante']= $consuladosPaisesFaltantes;
-         $data['paisconsuladoingresado']= $consuladosPaisesIngresados;
+         $data['paisesfaltantes']= $requisitosPaisesFaltantes;
+         $data['paisesingresados']= $requisitosPaisesIngresados;
          
         // replace this example code with whatever you need
-         return $this->render('AppBundle:Reportes:homepage.html.twig',
+         return $this->render('AppBundle:Reportes:reportes-requisitos-para-viajar.html.twig',
                  array(
                      'data'=>$data,
                  )

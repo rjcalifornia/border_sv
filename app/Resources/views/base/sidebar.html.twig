@@ -20,27 +20,26 @@
                     
                     <li><a href="{{path('homepage')}}"><i class="fa fa-home" ></i> 
                               Página principal</a>
-                {#  <li><a><i class="fa fa-home"></i> Consulta <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="{{path('paises_listado_general')}}">Categoría de países</a></li>
-                      
-                       <li><a href="#">Red consular</a></li>
-                       
-                        <li><a href="#">Código de países</a></li>
-                        
-                         
-                      </ul>
-                      
-                      <li><a><i class="fa fa-home"></i> Documentos <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                       <li><a href="#">Ver documentos válidos de viaje</a></li>
-                       </ul>#}
-                          <h3>Administración</h3>
-                          
+                              
+                             
+                              
+                          <h3>General</h3>
+                          {% if app.request.get('_route') == 'paises_listado_general' or app.request.get('_route') == 'paises_agregar_nuevo'%}
                                <li><a href="{{path('paises_listado_general')}}"><i class="fa fa-sort-alpha-asc" ></i> 
                               Categoría de países</a>
                                <li><a href="{{path('paises_agregar_nuevo')}}"><i class="fa fa-edit" ></i> 
                               Agregar categoria de país</a>
+                            {%endif%}
+                          </br>  
+                          {% if app.request.get('_route') == 'reporte_paises_documentos_validos' or app.request.get('_route') == 'reporte_paises_requisitos_de_viaje'%}
+                              <h3>Reportes</h3>
+                               <li><a href="{{path('reporte_paises_documentos_validos')}}"><i class="fa fa-sort-alpha-asc" ></i> 
+                              Documentos válidos</a>
+                               <li><a href="{{path('reporte_paises_requisitos_de_viaje')}}"><i class="fa fa-plane" ></i> 
+                              Requisitos para viajar</a>
+                            {%endif%}
+                            
+                            
                             
                       <li><a href="{{path('fos_user_security_logout')}}"><i class="fa fa-sign-out" ></i> 
                               Salir del sistema</a>
