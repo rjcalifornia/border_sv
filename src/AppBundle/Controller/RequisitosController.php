@@ -121,9 +121,9 @@ class RequisitosController extends Controller
         
         $form->handleRequest($request);
         // replace this example code with whatever you need
-        if ($form->isSubmitted() && $form->isValid()) {
-        // $form->getData() holds the submitted values
-        // but, the original `$task` variable has also been updated
+        if ($form->isSubmitted() && $form->isValid()) 
+            {
+        
         $informacion = $form->getData();
         $user = $this->getUser();
         $informacion->setUseradic($user);

@@ -10,6 +10,17 @@ use AppBundle\Entity\Mapas;
 use AppBundle\Entity\Banderas;
 use AppBundle\Form\AgregarPaisType;
 
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;   
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+
 class PaisesController extends Controller
 {
     /**
@@ -126,6 +137,222 @@ class PaisesController extends Controller
          return $this->render('AppBundle:Paises:ver-informacion-pais.html.twig', 
                  array('informacion'=> $informacionPais, 'mapa'=>$mapaid));
     }
+    
+    
+    
+    /**
+     * @Route("/paises/editar-informacion/", name="paises_editar_informacion")
+     */
+    public function editarPaisAction(Request $request)
+    {
+         $id = $request->query->get('id');
+         $paisRepository = $this->getDoctrine()
+                                 ->getRepository('AppBundle:Infopais');
+        $pais    = $paisRepository->findOneBy(array('id'=>"$id"));
+        
+        // $form = $this->createForm(AgregarPaisType::class, $pais);
+         
+         
+         $form = $this->createFormBuilder($pais);
+         $form  ->add('paisid', 
+              EntityType::class, 
+
+                        array(
+                            'class' => \AppBundle\Entity\Paises::class,
+                            'choice_label' => 'paisnombre',
+                            'choice_value' => 'id',
+                            'placeholder'=> 'Seleccione un pais',
+                            "attr" => array
+                            ('class' => 'select2 form-control col-md-7 col-xs-12', 'readonly'=>'readonly')
+                            ))
+
+                ->add('categoriaordinarioid', 
+              EntityType::class, 
+
+                        array(
+                            'class' => \AppBundle\Entity\Categoriapaises::class,
+                            'choice_label' => 'categorianombre',
+                            'choice_value' => 'id',
+                            'placeholder'=> 'Seleccione una categoria (Ordinario)',
+                            "attr" => array
+                            ('class' => 'select2 form-control col-md-7 col-xs-12')
+                            ))
+
+                ->add('categoriadiplomaticoid', 
+               EntityType::class, 
+
+                    array(
+                        'class' => \AppBundle\Entity\Categoriapaises::class,
+                        'choice_label' => 'categorianombre',
+                        'choice_value' => 'id',
+                        'placeholder'=> 'Seleccione una categoria (Diplomatico)',
+                        "attr" => array
+                        ('class' => 'select2 form-control col-md-7 col-xs-12')
+                        ))
+                
+                
+                
+                ->add('capital', 
+                    TextType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control col-md-7 col-xs-12', 'placeholder'=>false)))
+                
+                
+                
+                
+                ->add('superficie', 
+                    TextType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control col-md-7 col-xs-12', 'placeholder'=>false)))
+                
+                ->add('idioma', 
+                    TextType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control col-md-7 col-xs-12', 'placeholder'=>false)))
+                
+                ->add('gentilicio', 
+                    TextType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control col-md-7 col-xs-12', 'placeholder'=>false)))
+                
+                ->add('formagobierno', 
+                    TextType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control col-md-7 col-xs-12', 'placeholder'=>false)))
+                
+                ->add('legislacion', 
+                    TextType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control col-md-7 col-xs-12', 'placeholder'=>false)))
+                
+                ->add('moneda', 
+                    TextType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control col-md-7 col-xs-12', 'placeholder'=>false)))
+                
+                ->add('poblacion', 
+                    TextType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control col-md-7 col-xs-12', 'placeholder'=>false)))
+                
+                
+                ->add('codigoiso', 
+                    TextType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control', 'placeholder'=>false)))
+                
+                ->add('observaciones', 
+                    TextAreaType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control', 'placeholder'=>false)))
+                
+                ->add('mapapais', FileType::class, array(
+                    'label' => 'Mapa:', 
+                    'mapped'=> false,
+                    'required'   => false, 
+                    "attr" => array('accept'=>'application/png'),
+                    'data_class' => null))
+                
+                ->add('banderapais', FileType::class, array(
+                    'label' => 'Bandera:', 
+                    'mapped'=> false,
+                    'required'   => false, 
+                    "attr" => array('accept'=>'application/png'),
+                    'data_class' => null))
+                     
+            ->add('guardar', SubmitType::class, 
+                    array('label' => 'Registrar', 
+                        "attr" => array('class' => 'btn btn-success')))
+            
+        ;
+         $form =  $form->getForm();
+        $form->handleRequest($request);
+        
+        $getbanderaid = $pais->getBanderaid();
+        
+        $banderaPaisRepository = $this->getDoctrine()
+                               ->getRepository('AppBundle:Banderas');
+        $banderaPais = $banderaPaisRepository->findOneBy(array('id'=>$getbanderaid));
+         
+        if ($form->isSubmitted() && $form->isValid()) {
+         
+        $informacion = $form->getData();
+        $user = $this->getUser();
+        $informacion->setUsermodi($user);
+        $informacion->setFechamodi(new \DateTime('now'));
+         
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($informacion);
+        $em->flush();
+        
+        $bandera = $form['banderapais']->getData();
+         if ($bandera != null)
+        {
+            // $fileName = md5(uniqid()).'.'.$file->guessExtension();
+             $banderaEditada = $bandera->getClientOriginalName();
+
+             $bandera->move(
+                 $this->getParameter('banderas_directory'),
+                 $banderaEditada
+        );
+              
+             $banderaPais->setNombrebandera($banderaEditada);
+             $banderaPais->setUseradic($user);
+             $banderaPais->setFechaadic(new \DateTime('now'));
+              
+             $em->persist($banderaPais);
+             $em->flush();
+        }
+        
+        
+        
+        
+        $file = $form['mapapais']->getData();
+
+        if ($file != null)
+        {
+            // $fileName = md5(uniqid()).'.'.$file->guessExtension();
+             $nuevoMapa = $file->getClientOriginalName();
+
+             $file->move(
+                 $this->getParameter('mapas_directory'),
+                 $nuevoMapa
+        );
+             $getmapaid = $pais->getMapaid();
+             $mapaRepository = $this->getDoctrine()
+                               ->getRepository('AppBundle:Mapas');
+             $mapa = $mapaRepository->findOneBy(array('id'=>$getmapaid));
+              
+             $mapa->setNombremapa($nuevoMapa);
+             $mapa->setUseradic($user);
+             $mapa->setFechaadic(new \DateTime('now'));
+             
+              
+             $em->persist($mapa);
+             $em->flush();
+             
+             
+             
+        }
+        
+        return $this->redirectToRoute('paises_ver_informacion', array('id'=>$id));
+        }
+        
+         return $this->render('AppBundle:Paises:pais-editar-informacion.html.twig', 
+                 array('form'=> $form->createView()));
+    }
+    
+    
     
     /**
      * @Route("/paises/listado-general/", name="paises_listado_general")

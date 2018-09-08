@@ -24,7 +24,12 @@
                              
                               
                           <h3>General</h3>
-                          {% if app.request.get('_route') == 'paises_listado_general' or app.request.get('_route') == 'paises_agregar_nuevo'%}
+{% if app.request.get('_route') == 'paises_listado_general'
+ or app.request.get('_route') == 'paises_agregar_nuevo'
+ or app.request.get('_route') == 'paises_ver_informacion'
+ or app.request.get('_route') == 'paises_agregar_nuevo'
+
+%}
                                <li><a href="{{path('paises_listado_general')}}"><i class="fa fa-sort-alpha-asc" ></i> 
                               Categoría de países</a>
                                <li><a href="{{path('paises_agregar_nuevo')}}"><i class="fa fa-edit" ></i> 

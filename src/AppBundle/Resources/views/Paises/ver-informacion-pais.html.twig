@@ -153,6 +153,12 @@
               </div>
             </div>
           </div>
+                            {%if is_granted('ROLE_ADMIN')%}
+                </br>            
+               <a href="{{ path('paises_editar_informacion', { 'id':  informacion.id }) }}"> 
+                <button type="button" class="btn btn-success btn-sm">Editar información</button>
+                </a>
+                {%endif%}
         </div>
         <!-- /page content -->
 
