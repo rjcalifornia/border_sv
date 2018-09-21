@@ -126,10 +126,31 @@
       {latLng: [26.02, 50.55], name: 'Bahrain'},
       {latLng: [0.33, 6.73], name: 'Santo Tome y Principe', code: 'ST'}
     ];
+    
+    
+    
     $(function(){
       $('#world-map').vectorMap({map: 'world_mill',
       
-     
+     onRegionTipShow: function(event, label, code) {
+  
+         {%for m in data.edison%}
+                    if (code == '{{m.codigomapa}}') {
+                        
+                        label.text('{{m.paisid.paisnombre}} | Ver documentos válidos de viaje');
+                        
+                    }
+                    {% endfor %}
+},
+        
+         onMarkerTipShow: function(event, label, index) {
+             {%for m in data.edison%}
+                    if (markers[index].code === '{{m.codigomapa}}') {
+                         label.html('{{m.paisid.paisnombre}} | Ver documentos válidos de viaje');
+                    }
+                    {% endfor %}
+    },
+        
       onRegionClick: function(event, code) 
                 {
                     {%for m in data.edison%}

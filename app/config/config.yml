@@ -12,6 +12,7 @@ parameters:
     banderas_codigo_directory: '%kernel.project_dir%/web/uploads/iso'
     mapas_requisitos_directory: '%kernel.project_dir%/web/uploads/requisitos'
     mapas_edison_directory: '%kernel.project_dir%/web/uploads/edison/mapas'
+    pasaportes_edison_directory: '%kernel.project_dir%/web/uploads/edison/pasaportes'
 
 
 framework:

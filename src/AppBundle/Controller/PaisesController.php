@@ -29,7 +29,152 @@ class PaisesController extends Controller
     public function AgregarAction(Request $request)
     {
         $pais = new Infopais();
-        $form = $this->createForm(AgregarPaisType::class, $pais);
+        
+         $categoriasRepository = $this->getDoctrine()->getRepository('AppBundle:Infopais');
+        
+        $listado = $categoriasRepository->createQueryBuilder("r")
+        ->select('IDENTITY(r.paisid)')
+        ->getQuery()
+        ->getResult();
+        
+        $requisitosRepository = $this->getDoctrine()->getRepository('AppBundle:Paises');
+
+         $paises = $requisitosRepository->createQueryBuilder("q")
+                ->where("q.id NOT IN (:mispaises)")
+                ->setParameter("mispaises", $listado)
+                ->getQuery()
+                ->getResult();
+        
+         
+         
+         
+        $form = $this->createFormBuilder($pais);
+        
+        $form  ->add('paisid', 
+              EntityType::class, 
+
+                        array(
+                            'class' => \AppBundle\Entity\Paises::class,
+                            'choice_label' => 'paisnombre',
+                            //'choice_value' => 'id',
+                            'choices' => $paises,
+                            'placeholder'=> 'Seleccione un pais',
+                            "attr" => array
+                            ('class' => 'seleccionar-pais form-control col-md-7 col-xs-12')
+                            ))
+
+                ->add('categoriaordinarioid', 
+              EntityType::class, 
+
+                        array(
+                            'class' => \AppBundle\Entity\Categoriapaises::class,
+                            'choice_label' => 'categorianombre',
+                            'choice_value' => 'id',
+                            
+                            'placeholder'=> 'Seleccione una categoria (Ordinario)',
+                            "attr" => array
+                            ('class' => 'select2 form-control col-md-7 col-xs-12')
+                            ))
+
+                ->add('categoriadiplomaticoid', 
+               EntityType::class, 
+
+                    array(
+                        'class' => \AppBundle\Entity\Categoriapaises::class,
+                        'choice_label' => 'categorianombre',
+                        'choice_value' => 'id',
+                        'placeholder'=> 'Seleccione una categoria (Diplomatico)',
+                        "attr" => array
+                        ('class' => 'select2 form-control col-md-7 col-xs-12')
+                        ))
+                
+                
+                
+                ->add('capital', 
+                    TextType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control col-md-7 col-xs-12', 'placeholder'=>false)))
+                
+                
+                
+                
+                ->add('superficie', 
+                    TextType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control col-md-7 col-xs-12', 'placeholder'=>false)))
+                
+                ->add('idioma', 
+                    TextType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control col-md-7 col-xs-12', 'placeholder'=>false)))
+                
+                ->add('gentilicio', 
+                    TextType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control col-md-7 col-xs-12', 'placeholder'=>false)))
+                
+                ->add('formagobierno', 
+                    TextType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control col-md-7 col-xs-12', 'placeholder'=>false)))
+                
+                ->add('legislacion', 
+                    TextType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control col-md-7 col-xs-12', 'placeholder'=>false)))
+                
+                ->add('moneda', 
+                    TextType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control col-md-7 col-xs-12', 'placeholder'=>false)))
+                
+                ->add('poblacion', 
+                    TextType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control col-md-7 col-xs-12', 'placeholder'=>false)))
+                
+                
+                ->add('codigoiso', 
+                    TextType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control', 'placeholder'=>false)))
+                
+                ->add('observaciones', 
+                    TextAreaType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control', 'placeholder'=>false)))
+                
+                ->add('mapapais', FileType::class, array(
+                    'label' => 'Mapa:', 
+                    'mapped'=> false,
+                    'required'   => true, 
+                    "attr" => array('accept'=>'application/png'),
+                    'data_class' => null))
+                
+                ->add('banderapais', FileType::class, array(
+                    'label' => 'Bandera:', 
+                    'mapped'=> false,
+                    'required'   => true, 
+                    "attr" => array('accept'=>'application/png'),
+                    'data_class' => null))
+                     
+            ->add('guardar', SubmitType::class, 
+                    array('label' => 'Registrar', 
+                        "attr" => array('class' => 'btn btn-success')));
+        
+        $form =  $form->getForm();
+        
+        //$form = $this->createForm(AgregarPaisType::class, $pais);
         $form->handleRequest($request);
         // replace this example code with whatever you need
         if ($form->isSubmitted() && $form->isValid()) {

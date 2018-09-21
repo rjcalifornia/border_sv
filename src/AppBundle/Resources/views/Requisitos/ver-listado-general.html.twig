@@ -143,6 +143,18 @@
                     }
                     {% endfor %}
                 },
+                        
+                        
+        onRegionTipShow: function(event, label, code) {
+  
+         {%for m in data.pais%}
+                    if (code == '{{m.codigointerno}}') {
+                        
+                        label.text('{{m.paisid.paisnombre}} | Ver requisitos');
+                        
+                    }
+                    {% endfor %}
+},
           
                           markers: markers,
 
@@ -153,7 +165,16 @@
                         window.location = '{{ path('requisitos_ver_informacion') }}?id={{m.id}}';
                     }
                     {% endfor %}
-                  }
+                  },
+                          
+                                 onMarkerTipShow: function(event, label, index) {
+             {%for m in data.pais%}
+                    if (markers[index].code === '{{m.codigointerno}}') {
+                         label.html('{{m.paisid.paisnombre}} | Ver requisitos');
+                    }
+                    {% endfor %}
+    },
+  
                 
         });
     });

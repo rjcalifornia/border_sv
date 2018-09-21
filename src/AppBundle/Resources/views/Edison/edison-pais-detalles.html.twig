@@ -21,7 +21,15 @@
 
      <!-- page content -->
         <div class="right_col" role="main">
-
+<div align="right">
+                 <a href="{{path('edison_listado_general')}}">
+                 <button type="button" class="btn btn-danger btn-lg">
+                   <i class="fa fa-folder-open"></i>
+                    Buscar documentos válidos de viaje de otro país</button>
+                 </a>
+                 
+             </div>
+                 </br>
           <div class="">
        <div class="clearfix"></div>
 
@@ -87,13 +95,13 @@
        
         {% if m.categoriapasaporteid.id == 1%}
         
-         <a href="{{ asset('uploads/mapas/' ~s)}}" data-lightbox="nacional">
-                          <img src="{{ asset('uploads/mapas/' ~s)}}" alt="..." />
+         <a href="{{ asset('uploads/edison/pasaportes/' ~s)}}" data-lightbox="nacional">
+                          <img src="{{ asset('uploads/edison/pasaportes/' ~s)}}" alt="..." />
                         </a>
                         {%endif%}
      
         {%endfor%}
-</br>
+
 
 {%endfor%}
                        
@@ -111,13 +119,12 @@
        
         {% if m.categoriapasaporteid.id == 2%}
         
-         <a href="{{ asset('uploads/mapas/' ~s)}}" data-lightbox="diplomatico">
-                          <img src="{{ asset('uploads/mapas/' ~s)}}" alt="..." />
+         <a href="{{ asset('uploads/edison/pasaportes/' ~s)}}" data-lightbox="diplomatico">
+                          <img src="{{ asset('uploads/edison/pasaportes/' ~s)}}" alt="..." />
                         </a>
                         {%endif%}
      
         {%endfor%}
-</br>
 
 {%endfor%}
                        
@@ -136,13 +143,12 @@
        
         {% if m.categoriapasaporteid.id == 3%}
         
-         <a href="{{ asset('uploads/mapas/' ~s)}}" data-lightbox="oficial">
-                          <img src="{{ asset('uploads/mapas/' ~s)}}" alt="..." />
+         <a href="{{ asset('uploads/edison/pasaportes/' ~s)}}" data-lightbox="oficial">
+                          <img src="{{ asset('uploads/edison/pasaportes/' ~s)}}" alt="..." />
                         </a>
                         {%endif%}
      
         {%endfor%}
-</br>
 
 {%endfor%}
                        
@@ -165,13 +171,13 @@
 
                         {% if m.categoriapasaporteid.id == 4%}
 
-                         <a href="{{ asset('uploads/mapas/' ~s)}}" data-lightbox="servicio">
-                                          <img src="{{ asset('uploads/mapas/' ~s)}}" alt="..." />
+                         <a href="{{ asset('uploads/edison/pasaportes/' ~s)}}" data-lightbox="servicio">
+                                          <img src="{{ asset('uploads/edison/pasaportes/' ~s)}}" alt="..." />
                                         </a>
                                         {%endif%}
 
                         {%endfor%}
-                </br>
+                
 
 {%endfor%}
                        
@@ -192,13 +198,13 @@
        
         {% if m.categoriapasaporteid.id == 5%}
         
-         <a href="{{ asset('uploads/mapas/' ~s)}}" data-lightbox="refugio">
-                          <img src="{{ asset('uploads/mapas/' ~s)}}" alt="..." />
+         <a href="{{ asset('uploads/edison/pasaportes/' ~s)}}" data-lightbox="refugio">
+                          <img src="{{ asset('uploads/edison/pasaportes/' ~s)}}" alt="..." />
                         </a>
                         {%endif%}
      
         {%endfor%}
-</br>
+
 
 {%endfor%}
                        
@@ -218,17 +224,16 @@
        
         {% if m.categoriapasaporteid.id == 6%}
         
-         <a href="{{ asset('uploads/mapas/' ~s)}}" data-lightbox="provisional">
-                          <img src="{{ asset('uploads/mapas/' ~s)}}" alt="..." />
+         <a href="{{ asset('uploads/edison/pasaportes/' ~s)}}" data-lightbox="provisional">
+                          <img src="{{ asset('uploads/edison/pasaportes/' ~s)}}" alt="..." />
                         </a>
                         {%endif%}
      
         {%endfor%}
-</br>
+        
 
 {%endfor%}
-                       
-                      </div>
+         </div>
                       
                       </div>
                     </div>
@@ -238,12 +243,17 @@
 
                     </div>
                   </div>
-</br>
-<a class="btn btn-success" href="{{path('edison_pais_agregar_documentos')}}?id={{informacion.id}}"> 
-                        Agregar documentos de viaje </a>
+
                
     
 </div>
+
+</br>
+</br>
+    
+         </br>
+<a class="btn btn-success" href="{{path('edison_pais_agregar_documentos')}}?id={{informacion.id}}"> 
+                        Agregar documentos de viaje </a>
 </div>
               
               
@@ -256,10 +266,6 @@
               
               </div>
             </div>
-
-   
-
-
 
 
  <!-- footer content -->

@@ -155,6 +155,99 @@ class CodigosController extends Controller
                  array('informacion'=> $informacionPais, 'mapa'=>$mapaid));
     }
     
+    
+    /**
+     * @Route("/codigos/editar-informacion/", name="codigos_editar_informacion")
+     */
+    public function editarCodigoPaisAction(Request $request)
+    {
+         $id = $request->query->get('id');
+         $paisRepository = $this->getDoctrine()
+                                 ->getRepository('AppBundle:Codigos');
+         $pais    = $paisRepository->findOneBy(array('id'=>"$id"));
+         
+          $form = $this->createFormBuilder($pais);
+          
+          $form ->add('paisid', 
+              EntityType::class, 
+
+                        array(
+                            'class' => \AppBundle\Entity\Paises::class,
+                            'choice_label' => 'paisnombre',
+                            'choice_value' => 'id',
+                            'placeholder'=> 'Seleccione un pais',
+                            "attr" => array
+                            ('class' => 'select2 form-control col-md-7 col-xs-12')
+                            ))
+
+                
+                
+                
+                ->add('iso', 
+                    TextType::class, 
+                    array(
+                        "attr" => array
+                        ('class' => 'form-control col-md-7 col-xs-12', 'placeholder'=>false)))
+                
+                
+                
+                ->add('banderapais', FileType::class, array(
+                    'label' => 'Bandera:', 
+                    'mapped'=> false,
+                    'required'   => false, 
+                    "attr" => array('accept'=>'application/png'),
+                    'data_class' => null))
+                     
+            ->add('guardar', SubmitType::class, 
+                    array('label' => 'Registrar', 
+                        "attr" => array('class' => 'btn btn-success')))
+            
+        ;
+        $form =  $form->getForm();
+        $form->handleRequest($request);
+          
+        
+         if ($form->isSubmitted() && $form->isValid()) {
+        // $form->getData() holds the submitted values
+        // but, the original `$task` variable has also been updated
+        $informacion = $form->getData();
+        $user = $this->getUser();
+        $informacion->setUseradic($user);
+        $informacion->setFechaadic(new \DateTime('now'));
+        
+        $bandera = $form['banderapais']->getData();
+        
+        if ($bandera != null)
+        {
+            // $fileName = md5(uniqid()).'.'.$file->guessExtension();
+             $fileNames = $bandera->getClientOriginalName();
+
+             $bandera->move(
+                 $this->getParameter('banderas_codigo_directory'),
+                 $fileNames
+        );
+        
+             $informacion->setBandera($fileNames);
+              }
+        // ... perform some action, such as saving the task to the database
+        // for example, if Task is a Doctrine entity, save it!
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($informacion);
+        $em->flush();
+        
+             
+       
+        
+        
+        
+
+        return $this->redirectToRoute('codigos_listado_general');
+    }
+        
+           return $this->render('AppBundle:Codigos:agregar-nuevo-pais.html.twig', array('form'=> $form->createView()));
+    
+    }
+    
     /**
      * @Route("/codigos/listado-general/", name="codigos_listado_general")
      */

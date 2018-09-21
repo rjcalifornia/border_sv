@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+     {% include 'base/header.html.twig' %}
+     
+  </head>
+
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+         
+            <!-- sidebar menu -->
+             {% include 'base/sidebar.html.twig' %}
+            <!-- /sidebar menu -->
+
+            <!-- /menu footer buttons -->
+          
+            <!-- /menu footer buttons -->
+          </div>
+        </div>
+
+        <!-- top navigation -->
+         {% include 'base/topbar.html.twig' %}
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+              <div class="page-title">
+              <div class="title_left">
+                <h3>Usuarios <small>Listado general</small></h3>
+              </div>
+
+              <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <br />
+
+
+            <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Miembros</h2>
+                     
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                     
+                    </p>
+                    <table id="datatable" class="table table-striped table-bordered">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Nombre completo</th>
+                          <th>Usuario</th>
+                          <th>Tipo de cuenta</th>
+                          <th>Estado</th>
+                          <th>Opciones</th>
+                        </tr>
+                      </thead>
+
+{%set counter = 0%}
+                      <tbody>
+                          {%for m in data.usuarios%}
+                              {%set counter = counter +1%}
+                        <tr>
+                          <td>{{counter}}</td>
+                          <td>{{m.nombrecompleto}} </td>
+                          <td>  {{m.username}} </td>
+                          <td>
+                              
+                          {%for t in m.roles%}
+                              {%if t == 'ROLE_DEPARTAMENTAL'%}
+                                  Secretario Electoral Departamental
+                                  {%endif%}
+                               {%if t == 'ROLE_MUNICIPAL'%}
+                                  Secretario Electoral Municipal
+                                  {%endif%}
+                                  
+                                  {%if t == 'ROLE_ADMIN'%}
+                                  Administrador
+                                  {%endif%}
+                                  
+                                  {%if t == 'ROLE_MANAGER'%}
+                                  Elemento SAE
+                                  {%endif%}
+                                  
+                              {%endfor%}
+                              
+                          </td>
+                          <td>
+                          {%if m.enabled == 1%}
+                              Activado
+                          {%endif%}
+                          
+                          {%if m.enabled == 0%}
+                              Desactivado
+                          {%endif%}
+                          
+                          
+                          </td>
+                          <td>
+                              <a href="{{path('editar_usuario_sistema', {'usuarioid': m.id })}}">
+                              <button type="button" class="btn btn-info btn-xs">
+                                  Editar usuario
+                              </button> 
+                              </a>
+                          </td>
+                        </tr>
+                      {%endfor%}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+             
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
+
+{% include 'base/footer.html.twig' %}
+   {% include 'base/scripts.html.twig' %}
+
+     <!-- Datatables -->
+    <script src="{{ asset('assets/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{ asset('assets/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="{{ asset('assets/datatables.net-buttons/js/dataTables.buttons.min.js')}}"></script>
+
+   <!-- Custom Theme Scripts -->
+    <script src="{{ asset('assets/js/custom.min.js')}}"></script>
+  </body>
+</html>

@@ -87,9 +87,23 @@
                       <tbody>
                           {%for m in data.pais%}
                         <tr {#onclick="window.location='{{ path('paises_ver_informacion', { 'id':  m.id }) }}';"#}>
-                          <td><img src="{{ asset('uploads/iso/' ~ m.bandera)}}"></td>
-                          <td>{{m.paisid.paisnombre}}</td>
-                          <td>{{m.iso}}</td>
+                          <td><img src="{{ asset('uploads/iso/' ~ m.bandera)}}" width="94"></td>
+                          <td>
+                          <p style="font-size: 18px; font-weight: bold;">
+                              {{m.paisid.paisnombre}}
+                          </p>
+                          </td>
+                          <td>
+                               <p style="font-size: 18px; font-weight: bold;">
+                                   {{m.iso}}
+                                    </p>
+                          {%if is_granted('ROLE_ADMIN')%}
+                </br>   </br>          
+               <a href="{{ path('codigos_editar_informacion', { 'id':  m.id }) }}"> 
+                <button type="button" class="btn btn-success btn-sm">Editar información</button>
+                </a>
+                {%endif%}
+                          </td>
                           </tr>
                         {%endfor%}
                         
