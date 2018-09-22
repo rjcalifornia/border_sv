@@ -74,7 +74,7 @@ class AgregarRequisitoPaisType extends AbstractType
                 ->add('mapa', FileType::class, array(
                     'label' => 'Mapa:', 
                     'mapped'=> false,
-                    'required'   => true, 
+                    'required'   => false, 
                     "attr" => array('accept'=>'application/png'),
                     'data_class' => null))
                      

@@ -163,7 +163,7 @@ class RequisitosController extends Controller
     }
     
     
-      /**
+    /**
      * @Route("/requisitos/editar-informacion/", name="requisitos_editar_informacion")
      */
     public function editarRequisitosPaisAction(Request $request)
