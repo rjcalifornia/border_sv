@@ -199,13 +199,15 @@ class RequisitosController extends Controller
                  $informacion->setMapa($fileNames);
             // ... perform some action, such as saving the task to the database
             // for example, if Task is a Doctrine entity, save it!
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($informacion);
-            $em->flush();
+            
             
             
 
             }
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($informacion);
+            $em->flush();
         
             return $this->redirectToRoute('requisitos_ver_informacion', 
                     array(

@@ -1,0 +1,25 @@
+ <div role="tabpanel" class="tab-pane fade" id="tab_content5" aria-labelledby="profile-tab">
+<div class="product_gallery">
+                                  <div class="galeria5">
+                                {%set counter = 0%}
+{%for m in documentos%}
+    
+    
+    {% for s in m.nombrepasaporte%}
+       
+        {% if m.categoriapasaporteid.id == 5%}
+        
+         <a href="{{ asset('uploads/edison/pasaportes/' ~s)}}" data-lightbox="refugio">
+                          <img src="{{ asset('uploads/edison/pasaportes/' ~s)}}" alt="..." height="55px;" />
+                        </a>
+                        {%endif%}
+     
+        {%endfor%}
+
+
+{%endfor%}
+                       
+                      </div>
+                      
+                      </div>
+                    </div>

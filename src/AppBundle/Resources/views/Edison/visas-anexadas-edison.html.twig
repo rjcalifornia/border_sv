@@ -1,0 +1,24 @@
+<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+                            <div class="product_gallery">
+                                 <div class="galeria7">
+                                {%set counter = 0%}
+{%for m in documentos%}
+    
+    
+    {% for s in m.nombrepasaporte%}
+       
+        {% if m.categoriapasaporteid.id == 7%}
+        
+         <a class="lozad" href="{{ asset('uploads/edison/pasaportes/' ~s)}}" data-lightbox="visas">
+                          <img src="{{ asset('uploads/edison/pasaportes/' ~s)}}" alt="..." height="55px;"/>
+                        </a>
+                        {%endif%}
+     
+        {%endfor%}
+
+
+{%endfor%}
+                       
+                      </div> 
+                      </div>
+                          </div>

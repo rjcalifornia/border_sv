@@ -4,7 +4,7 @@
    {% include 'base/header.html.twig' %}
     {# <link href="{{ asset('assets/simplelightbox/dist/simplelightbox.css')}}" rel="stylesheet">#}
      <link href="{{ asset('assets/lightbox2/dist/css/lightbox.css')}}" rel="stylesheet">
-
+    {% include 'base/edison-style.html.twig' %}
   </head>
 
   <body class="nav-md">
@@ -57,191 +57,29 @@
                       </div>
                       
 <div class="ln_solid"></div>
-<h2>Pasaportes</h2>
-<div class="ln_solid"></div>
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'pasaportes_1')">Pasaportes</button>
+  <button class="tablinks" onclick="openCity(event, 'visas_1')">Visas</button>
+  <button class="tablinks" onclick="openCity(event, 'sellos_1')">Sellos</button>
+</div>
+
+
+
+<div id="pasaportes_1" class="tabcontent">
+ 
+  <p>{%include ('AppBundle:Edison:panel-pasaportes-pais.html.twig')%}</p>
+  
+</div>
+
+<div id="visas_1" class="tabcontent">
+   <p>{%include ('AppBundle:Edison:panel-visas-otorgadas.html.twig')%}</p>
+</div>
+
+<div id="sellos_1" class="tabcontent">
+  {%include ('AppBundle:Edison:panel-sellos-edison.html.twig')%}
+</div>
                     </div> 
-                    <div class="col-md-12">
-<div class="clearfix"></div>
-                      <div class="" role="tabpanel" data-example-id="togglable-tabs">
-                        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                          <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Nacional</a>
-                          </li>
-                          <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Diplomático</a>
-                          </li>
-                          <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Oficial</a>
-                          </li>
-                          
-                            <li role="presentation" class=""><a href="#tab_content4" role="tab" id="profile-tab3" data-toggle="tab" aria-expanded="false">Servicio</a>
-                          </li>
-           
-                          
-                          <li role="presentation" class=""><a href="#tab_content5" role="tab" id="profile-tab4" data-toggle="tab" aria-expanded="false">Documento de viaje para refugiado</a>
-                          </li>
-           
-                          <li role="presentation" class=""><a href="#tab_content6" role="tab" id="profile-tab5" data-toggle="tab" aria-expanded="false">Provisional</a>
-                          </li>
-           
-                          
-                        </ul>
-                        <div id="myTabContent" class="tab-content">
-                          <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
-                            <div class="product_gallery">
-                                 <div class="galeria1">
-                                {%set counter = 0%}
-{%for m in documentos%}
-    
-    
-    {% for s in m.nombrepasaporte%}
-       
-        {% if m.categoriapasaporteid.id == 1%}
-        
-         <a href="{{ asset('uploads/edison/pasaportes/' ~s)}}" data-lightbox="nacional">
-                          <img src="{{ asset('uploads/edison/pasaportes/' ~s)}}" alt="..." />
-                        </a>
-                        {%endif%}
-     
-        {%endfor%}
-
-
-{%endfor%}
-                       
-                      </div> 
-                      </div>
-                          </div>
-                          <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
-                          <div class="product_gallery">
-                              <div class="galeria2">
-                                {%set counter = 0%}
-{%for m in documentos%}
-    
-    
-    {% for s in m.nombrepasaporte%}
-       
-        {% if m.categoriapasaporteid.id == 2%}
-        
-         <a href="{{ asset('uploads/edison/pasaportes/' ~s)}}" data-lightbox="diplomatico">
-                          <img src="{{ asset('uploads/edison/pasaportes/' ~s)}}" alt="..." />
-                        </a>
-                        {%endif%}
-     
-        {%endfor%}
-
-{%endfor%}
-                       
-                      </div>
-                      </div>
-                          </div>
-                          <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
-                          
-                              <div class="product_gallery">
-                                  <div class="galeria3">
-                                {%set counter = 0%}
-{%for m in documentos%}
-    
-    
-    {% for s in m.nombrepasaporte%}
-       
-        {% if m.categoriapasaporteid.id == 3%}
-        
-         <a href="{{ asset('uploads/edison/pasaportes/' ~s)}}" data-lightbox="oficial">
-                          <img src="{{ asset('uploads/edison/pasaportes/' ~s)}}" alt="..." />
-                        </a>
-                        {%endif%}
-     
-        {%endfor%}
-
-{%endfor%}
-                       
-                      </div>
-                      
-                      </div>
-                          
-                              
-                          </div>
-
-                    <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
-
-                        <div class="product_gallery">
-                                  <div class="galeria4">
-                                {%set counter = 0%}
-                {%for m in documentos%}
-
-
-                    {% for s in m.nombrepasaporte%}
-
-                        {% if m.categoriapasaporteid.id == 4%}
-
-                         <a href="{{ asset('uploads/edison/pasaportes/' ~s)}}" data-lightbox="servicio">
-                                          <img src="{{ asset('uploads/edison/pasaportes/' ~s)}}" alt="..." />
-                                        </a>
-                                        {%endif%}
-
-                        {%endfor%}
-                
-
-{%endfor%}
-                       
-                      </div>
-                      
-                      </div>
-
-                    </div>
-
-                    <div role="tabpanel" class="tab-pane fade" id="tab_content5" aria-labelledby="profile-tab">
-<div class="product_gallery">
-                                  <div class="galeria5">
-                                {%set counter = 0%}
-{%for m in documentos%}
-    
-    
-    {% for s in m.nombrepasaporte%}
-       
-        {% if m.categoriapasaporteid.id == 5%}
-        
-         <a href="{{ asset('uploads/edison/pasaportes/' ~s)}}" data-lightbox="refugio">
-                          <img src="{{ asset('uploads/edison/pasaportes/' ~s)}}" alt="..." />
-                        </a>
-                        {%endif%}
-     
-        {%endfor%}
-
-
-{%endfor%}
-                       
-                      </div>
-                      
-                      </div>
-                    </div>
-
-                    <div role="tabpanel" class="tab-pane fade" id="tab_content6" aria-labelledby="profile-tab">
-<div class="product_gallery" style="padding-top:0;">
-                                  <div class="galeria6">
-                                {%set counter = 0%}
-{%for m in documentos%}
-    
-    
-    {% for s in m.nombrepasaporte%}
-       
-        {% if m.categoriapasaporteid.id == 6%}
-        
-         <a href="{{ asset('uploads/edison/pasaportes/' ~s)}}" data-lightbox="provisional">
-                          <img src="{{ asset('uploads/edison/pasaportes/' ~s)}}" alt="..." />
-                        </a>
-                        {%endif%}
-     
-        {%endfor%}
-        
-
-{%endfor%}
-         </div>
-                      
-                      </div>
-                    </div>
-                        </div>
-                      </div>
-
-
-                    </div>
+                    {#here#}
                   </div>
 
                
@@ -276,42 +114,24 @@
     </div>
 
   {% include 'base/scripts.html.twig' %}
-  {#        <script src="{{ asset('assets/simplelightbox/dist/simple-lightbox.js')}}"></script>
-{#
-          <script>
-              	$(function(){
-		var $gallery1 = $('.galeria1 a').simpleLightbox();
-            });
-            
-            $(function(){
-		var $gallery2 = $('.galeria2 a').simpleLightbox();
-            });
-            
-             $(function(){
-		var $gallery3 = $('.galeria3 a').simpleLightbox();
-            });
-            
-            
-             $(function(){
-		var $gallery4 = $('.galeria4 a').simpleLightbox();
-            });
-            
-            
-             $(function(){
-		var $gallery5 = $('.galeria5 a').simpleLightbox();
-            });
-            
-             $(function(){
-		var $gallery6 = $('.galeria6 a').simpleLightbox();
-            });
-            
-             $(function(){
-		var $gallery7 = $('.pais a').simpleLightbox();
-            });
-          </script>
-    #}
-          <script src="{{ asset('assets/lightbox2/dist/js/lightbox.js')}}"></script>
+ <script src="https://cdn.jsdelivr.net/npm/lozad"></script>
 
+          <script src="{{ asset('assets/lightbox2/dist/js/lightbox.js')}}"></script>
+<script>
+function openCity(evt, cityName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+</script>
 
   </body>
 </html>
